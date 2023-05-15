@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import { Container, Screen, Prevoius, Current, Button } from "../style/Main";
+import { Container, Screen, Current, Button } from "../style/Main";
 
 const Calculator = () => {
   const [current, setCurrent] = useState("");
   const [prevoius, setPrevoius] = useState("");
   const [operations, setOperations] = useState("");
 
-  const appendValueHandler = (el) => {
-    const value = el.target.getAttribute("data");
+  const appendValueHandler = (val) => {
+    const value = val.target.getAttribute("data");
     if (value === "." && current.includes(".")) return;
     setCurrent(current + value);
   };
@@ -22,7 +22,7 @@ const Calculator = () => {
     setPrevoius("");
   };
 
-  const chooseOperationHandler = (el) => {
+  const chooseOperationHandler = (val) => {
     if (current === "") return;
     if (prevoius !== "") {
       let value = compute();
@@ -31,7 +31,7 @@ const Calculator = () => {
       setPrevoius(current);
     }
     setCurrent("");
-    setOperations(el.target.getAttribute("data"));
+    setOperations(val.target.getAttribute("data"));
   };
 
   const equalHandler = () => {
@@ -67,12 +67,9 @@ const Calculator = () => {
 
   return (
     <>
-      <Container>
-        <Screen>
-          <Prevoius>
-            {prevoius} {operations}
-          </Prevoius>
-          <Current>{current}</Current>
+      <Container className="container">
+        <Screen className="screen">
+          <Current> {prevoius} {operations} {current}</Current>
         </Screen>
         <Button gridSpan={2} control onClick={allclearHandler}>
           AC
@@ -88,7 +85,6 @@ const Calculator = () => {
           8
         </Button>
         <Button data={9} onClick={appendValueHandler}>
-          {" "}
           9
         </Button>
         <Button data={"x"} operation onClick={chooseOperationHandler}>
